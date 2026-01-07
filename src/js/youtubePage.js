@@ -34,9 +34,17 @@ function renderChannelInfo() {
                 '/src/assets/images/portrait.jpg'; 
 
   const socialHtml = socialsData.map(s => {
-    // FIX: Pfad zeigt jetzt auf den public/icons Ordner
-    // Vite kopiert alles aus "public" ins Root. Daher ist der Pfad im Browser einfach "/icons/..."
-    const iconPath = `/icons/${s.platform.toLowerCase()}-icon.png`;
+    // FIX: Wir nutzen new URL(...), damit Vite die Bilder aus src/assets/images auch im JS findet.
+    // Das funktioniert analog zum HTML-Tag auf der Startseite.
+    let iconPath;
+    try {
+        // Der Pfad muss relativ zu DIESER js-Datei sein.
+        // Also: Raus aus 'js' (..), rein in 'assets/images'
+        iconPath = new URL(`../assets/images/${s.platform.toLowerCase()}-icon.png`, import.meta.url).href;
+    } catch (e) {
+        console.warn('Icon nicht gefunden:', s.platform);
+        iconPath = ''; // Fallback, falls Datei fehlt
+    }
     
     return `
       <a href="${s.url}" target="_blank" class="social-item">
