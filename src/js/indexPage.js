@@ -1,22 +1,22 @@
 // src/js/indexPage.js
 
-import { getChannelData, formatNumber } from './api.js';
+import { formatNumber } from './api.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
+// WICHTIG: Wir laden jetzt die statischen Daten, die das Build-Skript erzeugt hat.
+// Keine API-Calls mehr im Client!
+import youtubeData from '../data/youtubeData.json';
+
+document.addEventListener('DOMContentLoaded', () => {
   
   // 1. Abonnentenzahl laden
   const infoEl = document.getElementById('subscriber-info');
   if (infoEl) {
-    try {
-      const channel = await getChannelData();
-      if (channel && channel.subscriberCount) {
-        infoEl.textContent = formatNumber(channel.subscriberCount) + ' Abonnenten';
-      } else {
-        infoEl.textContent = '';
-      }
-    } catch (error) {
-      console.error('Fehler beim Laden der Kanaldaten auf der Startseite:', error);
-      infoEl.textContent = '';
+    // Prüfen ob Daten im JSON vorhanden sind
+    if (youtubeData && youtubeData.channel && youtubeData.channel.subscriberCount) {
+      infoEl.textContent = formatNumber(youtubeData.channel.subscriberCount) + ' Abonnenten';
+    } else {
+      // Fallback, falls Daten fehlen (z.B. beim ersten lokalen Start ohne fetch)
+      infoEl.textContent = ''; 
     }
   }
 
