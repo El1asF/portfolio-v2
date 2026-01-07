@@ -1,3 +1,4 @@
+// src/js/youtubePage.js
 import { formatNumber, formatDate, formatDurationISO } from './api.js';
 
 // Importiere generierte und statische Daten
@@ -26,15 +27,16 @@ function renderChannelInfo() {
 
   const styledTitle = channel.title ? channel.title.replace(/1/g, '<span class="highlight">1</span>') : 'Kanal';
   
-  // FIX: Priorisiere High-Res Thumbnail
-  // Wir prüfen sicherheitshalber, ob 'high' existiert, sonst medium, sonst default.
+  // Thumbnail
   const thumb = channel.thumbnails?.high?.url || 
                 channel.thumbnails?.medium?.url || 
                 channel.thumbnails?.default?.url || 
-                '/src/assets/images/portrait.jpg'; // Fallback Bild
+                '/src/assets/images/portrait.jpg'; 
 
   const socialHtml = socialsData.map(s => {
-    const iconPath = `/src/assets/images/${s.platform.toLowerCase()}-icon.png`;
+    // FIX: Pfad zeigt jetzt auf den public/icons Ordner
+    // Vite kopiert alles aus "public" ins Root. Daher ist der Pfad im Browser einfach "/icons/..."
+    const iconPath = `/icons/${s.platform.toLowerCase()}-icon.png`;
     
     return `
       <a href="${s.url}" target="_blank" class="social-item">
