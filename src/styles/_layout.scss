@@ -25,10 +25,55 @@
   }
 }
 
+// Gruppe für Logo und Back-Button
+.brand-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem; 
+}
+
+// NEU: Custom Image Back-Button
+.nav-back-btn {
+    // Reset
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    
+    // Box Styling (Beige & Eckig/Leicht abgerundet)
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; 
+    height: 42px;
+    margin: 0rem 0.1rem;
+    background-color: $color-primary; // Beige Background
+    box-shadow: $shadow-std; // Schatten passend zum Rest
+    
+    // Icon Bild einbinden
+    background-image: url('../assets/images/arrow.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 85%; // Pass die Größe des Icons hier an
+
+    transform: rotate(5deg);
+    
+    // Interaktion
+    transition: transform $trans-speed ease, background-color $trans-speed;
+
+    &:hover {
+        background-color: $color-primary-dark; // Dunkler beim Hover
+        transform: translateY(-2px) rotate(-3deg); // Leichter Lift-Effekt (keine Drehung)
+    }
+    
+    // Versteckt Text-Inhalt (für Screenreader bleibt aria-label im HTML)
+    font-size: 0; 
+}
+
 .logo {
   font-size: 2.3rem;
   font-weight: 900;
   color: $color-text;
+  text-decoration: none; 
   span { display: none; }
 }
 
@@ -122,50 +167,6 @@
   }
 
   .hamburger { display: flex; }
-}
-
-// --- Back Button Overlay ---
-.back-btn-overlay {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 900;
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  background-color: $color-text;
-  color: $color-primary;
-  text-decoration: none;
-  font-weight: 700;
-  padding: 1rem 1.2rem;
-  border-radius: 0; 
-  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-  
-  --tilt: 2deg;
-  --tilt-hover: 4deg;
-  transform: rotate(var(--tilt));
-  transition: transform $trans-speed $trans-ease, background-color $trans-speed;
-  
-  &:hover {
-    transform: translateY(-5px) rotate(var(--tilt-hover));
-    // FIX: Neue Syntax statt lighten()
-    background-color: color.scale($color-text, $lightness: 10%);
-  }
-  
-  &::before {
-    content: '←';
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
-  }
-  
-  @media (max-width: 768px) {
-    bottom: 1.5rem;
-    right: 1.5rem;
-    padding: 0.8rem 1rem;
-    font-size: 0.9rem;
-  }
 }
 
 // --- Hero & Sections ---

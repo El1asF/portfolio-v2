@@ -1,0 +1,39 @@
+[
+  {
+    "id": "beispiel-projekt",
+    "titel": "Beispiel Projekt",
+    "beschreibung": "Ein Beispiel für ein anderes Projekt ohne Video, nur mit Bild.",
+    "link": "https://example.com",
+    "image": "/src/assets/images/placeholder.jpg",
+    "datum": "2024-01"
+  },
+  {
+    "id": "mega-showcase",
+    "titel": "Maximales Showcase",
+    "beschreibung": "Dieses Projekt demonstriert alle Funktionen: Video-Embed, Galerie, BTS-Bilder und ausführliche Beschreibung.",
+    "langbeschreibung": "Hier ist Platz für die ganze Story hinter dem Projekt. Du kannst erklären, welche Technik verwendet wurde (z.B. Sony FX3, DaVinci Resolve) und wie der Workflow war.\n\nDer Text unterstützt Zeilenumbrüche (einfach im JSON \\n nutzen). Das hier ist ein neuer Absatz.\n\nUnten in der Galerie siehst du Behind-The-Scenes Material und weitere Ausschnitte.",
+    "aufgaben": ["Regie", "DOP", "Color Grading", "Sound Design"],
+    "datum": "2024-03",
+    "image": "/src/assets/images/showcase-thumb.jpg",
+    "videolink": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "link": "https://eliasfriderici.com",
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/src/assets/images/bts-1.jpg"
+      },
+      {
+        "type": "video",
+        "src": "https://www.youtube.com/watch?v=jNQXAC9IVRw"
+      },
+      {
+        "type": "image",
+        "src": "/src/assets/images/bts-2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/src/assets/images/result-shot.jpg"
+      }
+    ]
+  }
+]

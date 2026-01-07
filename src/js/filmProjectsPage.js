@@ -1,9 +1,12 @@
 // filmProjectsPage.js
-// Dieses Modul wird auf der Film & Projekte‑Seite geladen und sorgt dafür,
-// dass die Timeline aus den JSON‑Daten generiert wird.
+import { loadFilmprojekte } from './dataLoader.js';
+import { renderTimeline } from './timelineRenderer.js';
 
-import { initFilmprojekteTimeline } from './filmprojekteRenderer.js';
-
-document.addEventListener('DOMContentLoaded', () => {
-  initFilmprojekteTimeline();
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+      const data = await loadFilmprojekte();
+      renderTimeline(data, 'film-timeline');
+  } catch (e) {
+      console.error(e);
+  }
 });

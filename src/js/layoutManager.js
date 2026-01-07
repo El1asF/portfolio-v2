@@ -3,7 +3,7 @@
 
 /**
  * Injiziert den Header (Navbar)
- * UND den Back-Button, wenn wir nicht auf Index sind.
+ * Jetzt inklusive integriertem Back-Button
  */
 export function injectHeader() {
   const headerPlaceholder = document.getElementById('header-placeholder');
@@ -12,12 +12,24 @@ export function injectHeader() {
   const path = window.location.pathname;
   // Fallback für leeren Pfad oder '/'
   const page = path.split('/').pop() || 'index.html';
+  const isHome = page === 'index.html' || page === '';
+
+  // Back-Button HTML (nur wenn nicht Startseite)
+  // Wir nutzen history.back(), um zur vorherigen Seite zu springen
+  const backBtnHtml = isHome 
+    ? '' 
+    : `<button id="nav-back-btn" class="nav-back-btn" aria-label="Zurück"></button>`;
 
   // Navbar HTML
   headerPlaceholder.innerHTML = `
     <nav class="navbar">
       <div class="container">
-        <a href="index.html" class="logo">Elias Friderici</a>
+        
+        <div class="brand-group">
+            ${backBtnHtml}
+            <a href="index.html" class="logo">Elias Friderici</a>
+        </div>
+
         <button class="hamburger" aria-label="Menü">
           <span></span>
           <span></span>
@@ -32,13 +44,14 @@ export function injectHeader() {
     </nav>
   `;
 
-  // Back-Button Logic: Zeige Button nur, wenn NICHT auf Startseite
-  if (page !== 'index.html' && page !== '') {
-      const backBtn = document.createElement('a');
-      backBtn.href = 'index.html';
-      backBtn.className = 'back-button-overlay';
-      backBtn.setAttribute('aria-label', 'Zurück zur Startseite');
-      document.body.appendChild(backBtn);
+  // Event Listener für den Back-Button
+  if (!isHome) {
+      const btn = document.getElementById('nav-back-btn');
+      if (btn) {
+          btn.addEventListener('click', () => {
+              window.history.back();
+          });
+      }
   }
 
   initMobileMenu();
@@ -80,7 +93,7 @@ function initMobileMenu() {
 }
 
 /**
- * Initialisiert Scroll-Buttons
+ * Initialisiert Scroll-Buttons (bleibt unverändert)
  */
 export function initScrollControls() {
   const sliders = document.querySelectorAll('.video-slider-wrapper');

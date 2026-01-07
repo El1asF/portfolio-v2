@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Details – Elias Friderici</title>
+  <style>body { opacity: 0; transition: opacity 0.3s ease-in-out; }</style>
+</head>
+<body>
+  
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section class="page-heading">
+      <div class="container">
+        <h1 id="detail-title">Lade Projekt...</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        
+        <!-- Großes Medium -->
+        <div id="detail-main-media" class="detail-hero-media"></div>
+
+        <!-- Text Bereich -->
+        <div class="detail-content-box">
+          <div class="meta-info">
+            <span id="detail-date" class="meta-date"></span>
+            <div id="detail-roles" class="meta-roles"></div>
+          </div>
+          <div class="text-content">
+            <p id="detail-description" class="lead-text"></p>
+            <div id="detail-long-description" class="long-text"></div>
+          </div>
+        </div>
+
+        <!-- Galerie -->
+        <div id="gallery-section" style="display: none;">
+          <h2 class="section-title" style="margin-left: 0; transform: none;">Galerie / BTS</h2>
+          <div id="detail-gallery" class="gallery-grid"></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script type="module" src="/src/js/projectDetail.js"></script>
+  <script type="module" src="/src/js/app.js"></script>
+</body>
+</html>

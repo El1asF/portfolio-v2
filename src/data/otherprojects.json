@@ -1,9 +1,14 @@
 [
-  {
-    "titel": "Beispiel Projekt",
-    "beschreibung": "Hier könnte deine Beschreibung stehen.",
-    "link": "https://example.com",
-    "image": "/src/assets/images/placeholder.jpg",
-    "datum": "2024-01"
-  }
+{
+  "id": "brand-identity-el1asf",
+  "titel": "Brand Identity – El1as.F",
+  "beschreibung": "Entwicklung einer klaren Markenidentität für meinen YouTube-Kanal El1as.F: Logo, Typografie, Farben, Layout, Thumbnails, Social Media und Video-Grafiken.",
+  "langbeschreibung": "Im Fach Grafik & Print habe ich eine vollständige Brand Identity für meinen Kanal El1as.F entwickelt. Ziel war ein einheitliches, wiedererkennbares Erscheinungsbild, das meine Werte widerspiegelt: echt, unperfekt, technisch und DIY-orientiert. Kernbestandteile sind Logo und Profilbild (klar getrennte Funktionen), ein CI-Farbschema in Beige, Schwarz und Kupfergold, Rubik als Hausschrift, charakteristische gedrehte Textboxen, definierte Layout- und Schattenregeln sowie Gestaltungsrichtlinien für Thumbnails, Kapitelkarten, Einblendungen und Kurzvideos. Zusätzlich wurden Regeln für Icons, Illustrationen, Fotografie-Stil und Social-Media-Assets (YouTube-Banner, Posts, Stories, Podcast-Kachel, Visitenkarte etc.) festgelegt. Die Brand Identity sorgt für Konsistenz und Wiedererkennungswert über alle Medien hinweg und unterstützt die Positionierung meines Kanals als zugänglicher, experimentierfreudiger Maker-Channel.",
+  "aufgaben": ["Konzept", "Corporate Design", "Layout", "Typografie", "Branding"],
+  "datum": "2025-07-21",
+  "image": "src/assets/images/brand-identity-el1asf_Cover.png",
+  "videolink": "",
+  "link": "https://www.youtube.com/@El1asF",
+  "gallery": []
+}
 ]

@@ -31,52 +31,7 @@
     }
 }
 
-// --- Back Button Overlay ---
-.back-button-overlay {
-    position: fixed;
-    top: 90px; 
-    left: 20px;
-    z-index: 900;
-    
-    background-color: $color-text; 
-    color: $color-primary; 
-    border: none;
-    width: 42px;
-    height: 42px;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    text-decoration: none;
-    
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s;
-    
-    &::before {
-      content: '';
-      display: block;
-      width: 12px;
-      height: 12px;
-      border-top: 3px solid currentColor;
-      border-right: 3px solid currentColor;
-      border-top-right-radius: 2px;
-      transform: rotate(-135deg); 
-      margin-left: 4px; 
-    }
-
-    &:hover {
-        transform: scale(1.1);
-    }
-    
-    @media (max-width: 600px) {
-        top: 80px;
-        left: 10px;
-        width: 36px;
-        height: 36px;
-    }
-}
-
+// (Alter Back Button Overlay Code wurde hier entfernt)
 
 // --- Section Titles ---
 .section-title {
@@ -244,13 +199,14 @@
   transform-origin: center center;
   scroll-snap-align: start;
 
-  > a {
+  > a, > .card-content {
     display: flex;
     flex-direction: column;
     flex: 1;
     text-decoration: none;
     color: inherit;
     height: 100%;
+    width: 100%; 
   }
 
   &:hover { 
@@ -272,22 +228,23 @@
     overflow: hidden; 
     border-radius: 0.3em; 
     position: relative;
-    img {
+    
+    img, iframe {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.3s ease;
+      border: none;
     }
   }
   
-  // FIX: Inner Shadow (Vignette) auf Longform Karten sichergestellt
   &:not(.short-card) .thumbnail-mask::after {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      box-shadow: $shadow-inner; // Nutzt Variable aus _variables.scss
+      box-shadow: $shadow-inner; 
       pointer-events: none;
-      z-index: 2; // Erhöht auf 2 um sicher über dem Bild zu sein
+      z-index: 2; 
       border-radius: inherit;
   }
 
@@ -295,6 +252,13 @@
 
   &.long-card .video-thumbnail { 
     padding: 0.75em 0.75em 0 0.75em; 
+  }
+
+  &.standalone {
+    height: auto;
+    .video-thumbnail {
+      padding: 0.75em; 
+    }
   }
 
   .video-info {
@@ -322,13 +286,12 @@
     }
   }
 
-  // --- SHORT CARD STYLING (Dein Code) ---
+  // --- SHORT CARD STYLING ---
   &.short-card {
     background-color: transparent; 
-    box-shadow: none;
+    box-shadow: none; // Default: kein Schatten am Container
     
     .video-thumbnail {
-      // FIX: 3:4 Verhältnis
       aspect-ratio: 3 / 4; 
       padding: 0; 
       background-color: transparent;
@@ -338,14 +301,11 @@
         border-radius: 0.4em; 
         
         img {
-            // FIX: Zoom (1.35) und Verschiebung nach oben (-45px), 
-            // damit der Text unten im Thumbnail nicht abgeschnitten wird.
             transform: scale(1.35) translateY(-45px); 
-            transform-origin: center top; // Wichtig: Vom oberen Rand zoomen
+            transform-origin: center top; 
         }
     }
     
-    // Beim Hover: Nur noch leicht mehr zoomen, Verschiebung beibehalten
     &:hover .thumbnail-mask img { 
         transform: scale(1.38) translateY(-35px); 
     }
@@ -362,6 +322,9 @@
       flex-direction: column;
       justify-content: space-between; 
       
+      // Für smooth shadow transition
+      transition: box-shadow 0.3s ease; 
+
       h4 { 
         font-size: 0.7em; 
         line-height: 1.3;
@@ -381,7 +344,16 @@
       }
     }
     
-    &:hover { transform: translateY(-5px); }
+    // HOVER EFFEKTE FÜR SHORT CARD
+    &:hover { 
+      transform: translateY(-5px); 
+    }
+    
+    // FIX: Hier wird der Schatten auf die innere .short-info Box angewendet,
+    // da der äußere Container transparent ist.
+    &:hover .short-info {
+       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    }
   }
 }
 
@@ -397,13 +369,8 @@
 }
 
 #latest-videos .video-card {
-  // ----------------------------------------------------
-  // ANPASSUNG DER BREITE FÜR VIDEOS (3 Stück)
-  // Verringere den Wert '2rem', damit die Cards BREITER werden.
-  // Erhöhe den Wert, damit sie SCHMALER werden.
-  // ----------------------------------------------------
-  min-width: calc((100% - 2rem) / 3); // <<-- HIER ANPASSEN
-  width: calc((100% - 2rem) / 3);     // <<-- HIER ANPASSEN
+  min-width: calc((100% - 2rem) / 3); 
+  width: calc((100% - 2rem) / 3);    
   
   @media (max-width: 850px) { 
      min-width: calc((100% - 1rem) / 2);
@@ -420,12 +387,8 @@
 }
 
 #latest-shorts .short-card {
-  // ----------------------------------------------------
-  // ANPASSUNG DER BREITE FÜR SHORTS (6 Stück)
-  // Verringere den Wert '4rem', damit die Cards BREITER werden.
-  // ----------------------------------------------------
-  min-width: calc((100% - 4rem) / 6); // <<-- HIER ANPASSEN
-  width: calc((100% - 4rem) / 6);     // <<-- HIER ANPASSEN
+  min-width: calc((100% - 4rem) / 6); 
+  width: calc((100% - 4rem) / 6);     
   
   @media (max-width: 1024px) { 
      min-width: calc((100% - 2.5rem) / 4);
@@ -473,6 +436,73 @@
   p { margin-bottom: 1rem; }
   word-wrap: break-word; 
 }
+
+// --- Detail Page Styles (NEU) ---
+.detail-hero-media {
+    margin-bottom: 2rem;
+    .video-card { width: 100%; }
+}
+
+.detail-content-box {
+    background-color: $color-primary;
+    padding: 1.5rem;
+    box-shadow: $shadow-std;
+    margin-bottom: 2rem;
+    
+    .meta-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        gap: 1rem;
+    }
+    
+    .meta-date {
+        color: $color-accent;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    
+    .meta-roles {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .role-tag {
+        background-color: $color-text;
+        color: $color-primary;
+        font-size: 0.8rem;
+        padding: 0.2rem 0.5rem;
+        font-weight: 500;
+    }
+    
+    .lead-text {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+        line-height: 1.4;
+    }
+    
+    .long-text {
+        line-height: 1.8;
+    }
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    
+    .gallery-item {
+        width: 100%;
+    }
+}
+
 
 // --- Kontakt Formular ---
 .contact-container {
@@ -561,6 +591,7 @@
     }
   }
   .timeline-date { font-weight: 600; color: $color-accent; margin-bottom: 0.25rem; }
+  
   .project-name-box {
     display: inline-block;
     background-color: $color-text;
@@ -571,18 +602,31 @@
     margin-right: 0.4rem;
     box-shadow: $shadow-std;
     margin-bottom: 0.5rem;
+    
+    // WICHTIG: Standardmäßig KEINE Interaktion
+    transition: none; 
+    transform: none;
+    
+    // Nur bei dieser Klasse dreht sich das Element
+    &.interactive-title {
+        cursor: pointer;
+        transition: transform $trans-speed, background-color $trans-speed;
+        
+        &:hover {
+             transform: translateY(-2px) rotate(-1deg);
+             background-color: lighten($color-text, 10%);
+        }
+    }
   }
+  
   .project-description { font-size: 1.1rem; font-weight: 500; display: block;}
   .project-role { margin-top: 0.5rem; font-weight: 350;}
+  
   .timeline-video {
     flex: 1 1 40%;
     min-width: 280px; 
     display: flex;
-    iframe, img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      box-shadow: $shadow-std;
-    }
+    flex-direction: column; 
   }
   .timeline-content { flex: 1 1 50%; min-width: 280px; }
 }
@@ -643,7 +687,7 @@
         flex: 0 0 auto;
         margin-left: auto;
         flex-direction: column;
-        gap: 0.65rem;
+        gap: 0.4rem;
         flex-wrap: nowrap;
     }
     @media (max-width: 777px) {
@@ -655,24 +699,25 @@
   }
 }
 
-// Social Icons - ZOOM FIX
+// Social Icons - ZOOM FIX & HOVER STYLE
 .social-item {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.2rem;
   align-items: center;
   text-decoration: none;
   color: $color-text;
   
+  // Neu: Padding und Radius für den Hintergrund-Kasten
+  padding: 0.2rem 0.35rem; 
+  transition: background-color 0.2s ease, color 0.2s ease;
+
   img { 
     width: 28px; 
     height: 28px; 
     object-fit: contain;
     flex-shrink: 0;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); // Bouncy effect
-  }
-  
-  &:hover img {
-      transform: scale(1.2); 
+    // Bouncy effect beibehalten
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
   }
   
   .social-text {
@@ -680,7 +725,21 @@
      flex-direction: column; 
      line-height: 1.1;
      white-space: nowrap; 
-     .username { font-weight: 500; font-size: 0.9rem; }
-     .followers { font-size: 0.75rem; color: $color-accent; font-weight: 350; }
+     .username { font-weight: 450; font-size: 0.8rem; }
+     .followers { font-size: 0.6rem; color: $color-accent; font-weight: 350; }
+  }
+
+  // Hover Zustand
+  &:hover {
+      // 1. Hintergrund leicht abdunkeln (subtiler Kasten)
+      background-color: rgba(0, 0, 0, 0.06);
+      
+      // 2. WICHTIG: Textfarbe zwingen, schwarz zu bleiben (überschreibt globalen Link-Style)
+      color: $color-text; 
+
+      // 3. Icon vergrößern
+      img {
+          transform: scale(1.2); 
+      }
   }
 }
