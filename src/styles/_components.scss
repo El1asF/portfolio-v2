@@ -26,15 +26,15 @@
     --tilt-hover: -2.5deg;
     
     &:hover {
-        background-color: $color-text; // Bleibt gleich
-        color: $color-primary; // Bleibt gleich
+        background-color: $color-text; 
+        color: $color-primary; 
     }
 }
 
 // --- Back Button Overlay ---
 .back-button-overlay {
     position: fixed;
-    top: 90px; // Unterhalb der Navbar (ca 70-80px hoch)
+    top: 90px; 
     left: 20px;
     z-index: 900;
     
@@ -53,7 +53,6 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s;
     
-    // Pfeil nach Links
     &::before {
       content: '';
       display: block;
@@ -70,7 +69,6 @@
         transform: scale(1.1);
     }
     
-    // Auf Mobile evtl. etwas kleiner oder anders positionieren
     @media (max-width: 600px) {
         top: 80px;
         left: 10px;
@@ -86,9 +84,9 @@
   background-color: $color-text;
   color: $color-primary;
   padding: 0.25rem 0.75rem;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 900;
-  margin: 1.5rem 0 0.4rem;
+  margin: 1.5rem 1.5rem 0.25rem;
   box-shadow: $shadow-std;
   --tilt: -1deg;
   --tilt-hover: -3deg; 
@@ -99,6 +97,10 @@
     transform: translateY(-3px) rotate(var(--tilt-hover));
   }
   a { text-decoration: none; display: block; color: inherit; }
+
+  @media (max-width: 670px) {
+    font-size: clamp(1.1rem, 5vw, 1.5rem);
+  }
 }
 
 // --- Cards (Home Menu) ---
@@ -163,13 +165,10 @@
     scrollbar-width: none; 
     &::-webkit-scrollbar { display: none; }
     
-    // Basis-Schriftgröße für normale Slider Cards
-    // Alle inneren Werte basieren auf em, skalieren also hiermit.
     font-size: 1rem; 
     @media(max-width: 768px) { font-size: 0.9rem; }
   }
 
-  /* Scroll Buttons */
   .scroll-btn {
     position: absolute;
     top: 50%;
@@ -206,26 +205,34 @@
   }
 }
 
-// Featured Grid
+// --- Featured Grid (Responsive Fix) ---
 .featured-grid {
   display: grid;
-  grid-template-columns: 3.2fr 1fr; 
+  // FIX: 2.5fr zu 1fr
+  grid-template-columns: 2.3fr 1fr; 
   gap: 2rem;
   align-items: stretch;
   padding: 1rem 0;
-  
-  // WICHTIG: Hier skalieren wir die Cards hoch!
-  // Da alles in em ist, wachsen Titel, Padding und Overlay mit.
   font-size: 1.35rem; 
 
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr; 
+    gap: 1.5rem;
+    font-size: 1.1rem;
+    
+    .short-card.featured-short {
+        max-width: 400px;
+        margin: 0 auto; 
+        width: 100%;
+    }
+  }
+
   @media (max-width: 768px) {
-    gap: 1rem;
-    font-size: 1rem; // Auf Mobile normale Größe
+    font-size: 1rem; 
   }
 }
 
 // --- Basis Video Card (SCALABLE) ---
-// Alle Maße in 'em', damit sie über font-size am Container gesteuert werden können.
 .video-card {
   background-color: $color-primary;
   box-shadow: $shadow-std;
@@ -247,7 +254,7 @@
   }
 
   &:hover { 
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
     z-index: 10;
   }
@@ -256,7 +263,6 @@
     position: relative;
     aspect-ratio: 16 / 9;
     background-color: $color-primary;
-    // Padding in em
     padding: 0.25em; 
   }
 
@@ -273,6 +279,17 @@
       transition: transform 0.3s ease;
     }
   }
+  
+  // FIX: Inner Shadow (Vignette) auf Longform Karten sichergestellt
+  &:not(.short-card) .thumbnail-mask::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      box-shadow: $shadow-inner; // Nutzt Variable aus _variables.scss
+      pointer-events: none;
+      z-index: 2; // Erhöht auf 2 um sicher über dem Bild zu sein
+      border-radius: inherit;
+  }
 
   &:hover .thumbnail-mask img { transform: scale(1.03); }
 
@@ -281,7 +298,6 @@
   }
 
   .video-info {
-    // Relatives Padding
     padding: 0.6em 0.8em 0.8em 0.8em;
     flex-grow: 1; 
     display: flex;
@@ -289,7 +305,7 @@
     
     h4 {
       font-weight: 500;
-      font-size: 0.9em; // Relativ zur Card-Basisgröße
+      font-size: 0.9em; 
       margin-bottom: 0.3em;
       color: $color-text !important; 
       display: -webkit-box;
@@ -299,30 +315,46 @@
       line-height: 1.3;
     }
     .meta {
-      font-weight: 350;
-      font-size: 0.8em; // Relativ
+      font-weight: 365;
+      font-size: 0.75em; 
       color: $color-accent; 
       margin-top: auto; 
     }
   }
 
+  // --- SHORT CARD STYLING (Dein Code) ---
   &.short-card {
     background-color: transparent; 
     box-shadow: none;
     
     .video-thumbnail {
-      aspect-ratio: 9 / 16;
+      // FIX: 3:4 Verhältnis
+      aspect-ratio: 3 / 4; 
       padding: 0; 
       background-color: transparent;
       flex: 0 0 auto;
     }
-    .thumbnail-mask { border-radius: 0.4em; }
+    .thumbnail-mask { 
+        border-radius: 0.4em; 
+        
+        img {
+            // FIX: Zoom (1.35) und Verschiebung nach oben (-45px), 
+            // damit der Text unten im Thumbnail nicht abgeschnitten wird.
+            transform: scale(1.35) translateY(-45px); 
+            transform-origin: center top; // Wichtig: Vom oberen Rand zoomen
+        }
+    }
+    
+    // Beim Hover: Nur noch leicht mehr zoomen, Verschiebung beibehalten
+    &:hover .thumbnail-mask img { 
+        transform: scale(1.38) translateY(-35px); 
+    }
     
     .short-info {
       background-color: $color-primary;
       padding: 0.6em;
       box-shadow: $shadow-std;
-      margin-top: -0.8em; // Überlappung relativ
+      margin-top: -0.8em; 
       position: relative;
       z-index: 2;
       flex: 1; 
@@ -331,7 +363,7 @@
       justify-content: space-between; 
       
       h4 { 
-        font-size: 0.85em; 
+        font-size: 0.7em; 
         line-height: 1.3;
         font-weight: 500;
         -webkit-line-clamp: 3; 
@@ -342,15 +374,14 @@
         margin-bottom: 0.3em;
       }
       .meta {
-        font-size: 0.75em;
+        font-size: 0.65em;
         color: $color-accent;
-        font-weight: 350;
+        font-weight: 360;
         margin-top: auto; 
       }
     }
     
-    &:hover { transform: translateY(-2px) scale(1.02); }
-    &:hover .thumbnail-mask img { transform: scale(1.03); }
+    &:hover { transform: translateY(-5px); }
   }
 }
 
@@ -361,12 +392,22 @@
 }
 
 // --- Karussell Berechnungen ---
+#latest-videos {
+    gap: 1.5rem; 
+}
+
 #latest-videos .video-card {
-  min-width: calc((100% - 3rem) / 3);
-  width: calc((100% - 3rem) / 3);
+  // ----------------------------------------------------
+  // ANPASSUNG DER BREITE FÜR VIDEOS (3 Stück)
+  // Verringere den Wert '2rem', damit die Cards BREITER werden.
+  // Erhöhe den Wert, damit sie SCHMALER werden.
+  // ----------------------------------------------------
+  min-width: calc((100% - 2rem) / 3); // <<-- HIER ANPASSEN
+  width: calc((100% - 2rem) / 3);     // <<-- HIER ANPASSEN
+  
   @media (max-width: 850px) { 
-     min-width: calc((100% - 1.5rem) / 2);
-     width: calc((100% - 1.5rem) / 2);
+     min-width: calc((100% - 1rem) / 2);
+     width: calc((100% - 1rem) / 2);
   }
   @media (max-width: 550px) {
      min-width: 85%;
@@ -374,22 +415,30 @@
   }
 }
 
+#latest-shorts {
+    gap: 1rem; 
+}
+
 #latest-shorts .short-card {
-  min-width: calc((100% - 9rem) / 7);
-  width: calc((100% - 9rem) / 7);
+  // ----------------------------------------------------
+  // ANPASSUNG DER BREITE FÜR SHORTS (6 Stück)
+  // Verringere den Wert '4rem', damit die Cards BREITER werden.
+  // ----------------------------------------------------
+  min-width: calc((100% - 4rem) / 6); // <<-- HIER ANPASSEN
+  width: calc((100% - 4rem) / 6);     // <<-- HIER ANPASSEN
+  
   @media (max-width: 1024px) { 
-     min-width: calc((100% - 4.5rem) / 4);
-     width: calc((100% - 4.5rem) / 4);
+     min-width: calc((100% - 2.5rem) / 4);
+     width: calc((100% - 2.5rem) / 4);
   }
   @media (max-width: 600px) { 
-     min-width: calc((100% - 3rem) / 3);
-     width: calc((100% - 3rem) / 3);
+     min-width: calc((100% - 1.5rem) / 3);
+     width: calc((100% - 1.5rem) / 3);
   }
 }
 
 
 // --- Duration Overlay ---
-// Auch hier nutzen wir em für Position und Größe
 .duration-overlay {
   position: absolute;
   bottom: 0.6em; 
@@ -563,7 +612,7 @@
   }
   
   .channel-middle {
-    flex: 1 1 300px; 
+    flex: 1 1 250px; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -586,17 +635,18 @@
   .channel-right {
     flex: 1 1 100%; 
     display: flex;
+    margin-right: 2rem;
     gap: 1.5rem;
     flex-wrap: wrap; 
     justify-content: flex-end; 
-    @media (min-width: 950px) {
+    @media (min-width: 777px) {
         flex: 0 0 auto;
         margin-left: auto;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.65rem;
         flex-wrap: nowrap;
     }
-    @media (max-width: 949px) {
+    @media (max-width: 777px) {
         justify-content: flex-start;
         border-top: 1px solid rgba(0,0,0,0.05);
         padding-top: 1rem;
@@ -613,8 +663,6 @@
   text-decoration: none;
   color: $color-text;
   
-  // Verhindert Layout-Shift beim Zoomen
-  // Wir zoomen nur das Bild mit Transform
   img { 
     width: 28px; 
     height: 28px; 
@@ -624,7 +672,6 @@
   }
   
   &:hover img {
-      // WICHTIG: Transform statt Width/Height ändern!
       transform: scale(1.2); 
   }
   

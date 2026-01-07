@@ -1,4 +1,5 @@
 // src/styles/_layout.scss
+@use 'sass:color'; // WICHTIG: Modul laden
 @use 'variables' as *;
 
 // --- Navbar ---
@@ -123,7 +124,7 @@
   .hamburger { display: flex; }
 }
 
-// --- Back Button Overlay (NEU) ---
+// --- Back Button Overlay ---
 .back-btn-overlay {
   position: fixed;
   bottom: 2rem;
@@ -139,7 +140,7 @@
   text-decoration: none;
   font-weight: 700;
   padding: 1rem 1.2rem;
-  border-radius: 0; // Eckig bleiben wie Design System
+  border-radius: 0; 
   box-shadow: 0 8px 16px rgba(0,0,0,0.3);
   
   --tilt: 2deg;
@@ -149,7 +150,8 @@
   
   &:hover {
     transform: translateY(-5px) rotate(var(--tilt-hover));
-    background-color: lighten($color-text, 10%);
+    // FIX: Neue Syntax statt lighten()
+    background-color: color.scale($color-text, $lightness: 10%);
   }
   
   &::before {
@@ -190,7 +192,7 @@
       font-weight: 900;
       box-shadow: $shadow-std;
       transform: rotate(-2deg);
-      margin-bottom: 2.5rem;
+      margin: 0rem 0rem 2.5rem 1rem;
       
       @media (min-width: 768px) { font-size: 3rem; }
     }
@@ -234,7 +236,14 @@
     font-weight: 900;
     box-shadow: 0 3px 6px rgba(46, 43, 42, 0.18);
     transform: rotate(-2deg);
+    margin: 0rem 1rem 0rem;
   }
+  @media (max-width: 670px) {
+  h1 {
+    /* passt sich flüssig an die Bildschirmbreite an */
+    font-size: clamp(1.4rem, 6vw, 2.5rem);
+  }
+}
 }
 
 .section {

@@ -1,0 +1,14 @@
+name: Daily Website Update
+
+on:
+  schedule:
+    # Läuft jeden Tag um 03:00 Uhr morgens (UTC)
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Erlaubt manuelles Starten auf GitHub
+
+jobs:
+  trigger-netlify-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Netlify Build Hook
+        run: curl -X POST -d {} ${{ secrets.NETLIFY_BUILD_HOOK_URL }}
