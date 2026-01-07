@@ -1,0 +1,114 @@
+// src/js/layoutManager.js
+// Managed Header, Footer und Scroll-Buttons zentral
+
+/**
+ * Injiziert den Header (Navbar)
+ * UND den Back-Button, wenn wir nicht auf Index sind.
+ */
+export function injectHeader() {
+  const headerPlaceholder = document.getElementById('header-placeholder');
+  if (!headerPlaceholder) return;
+
+  const path = window.location.pathname;
+  // Fallback für leeren Pfad oder '/'
+  const page = path.split('/').pop() || 'index.html';
+
+  // Navbar HTML
+  headerPlaceholder.innerHTML = `
+    <nav class="navbar">
+      <div class="container">
+        <a href="index.html" class="logo">Elias Friderici</a>
+        <button class="hamburger" aria-label="Menü">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="youtube.html" class="${page === 'youtube.html' ? 'active' : ''}">YouTube</a></li>
+          <li><a href="filmprojects.html" class="${page === 'filmprojects.html' ? 'active' : ''}">Filmprojekte</a></li>
+          <li><a href="weitere-arbeiten.html" class="${page === 'weitere-arbeiten.html' ? 'active' : ''}">Weitere Arbeiten</a></li>
+        </ul>
+      </div>
+    </nav>
+  `;
+
+  // Back-Button Logic: Zeige Button nur, wenn NICHT auf Startseite
+  if (page !== 'index.html' && page !== '') {
+      const backBtn = document.createElement('a');
+      backBtn.href = 'index.html';
+      backBtn.className = 'back-button-overlay';
+      backBtn.setAttribute('aria-label', 'Zurück zur Startseite');
+      document.body.appendChild(backBtn);
+  }
+
+  initMobileMenu();
+}
+
+/**
+ * Injiziert den Footer
+ */
+export function injectFooter() {
+  const footerPlaceholder = document.getElementById('footer-placeholder');
+  if (!footerPlaceholder) return;
+
+  const year = new Date().getFullYear();
+  const displayYear = year > 2026 ? `2026 – ${year}` : '2026';
+
+  footerPlaceholder.innerHTML = `
+    <footer class="footer">
+      <div class="container">
+        <p>© ${displayYear} Elias Friderici – Alle Rechte vorbehalten.</p>
+        <div class="footer-links">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+        </div>
+      </div>
+    </footer>
+  `;
+}
+
+function initMobileMenu() {
+  const burger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+
+  if (burger && navLinks) {
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+  }
+}
+
+/**
+ * Initialisiert Scroll-Buttons
+ */
+export function initScrollControls() {
+  const sliders = document.querySelectorAll('.video-slider-wrapper');
+
+  sliders.forEach(wrapper => {
+    const container = wrapper.querySelector('.video-grid');
+    const btnLeft = wrapper.querySelector('.scroll-btn.left');
+    const btnRight = wrapper.querySelector('.scroll-btn.right');
+
+    if (!container || !btnLeft || !btnRight) return;
+
+    const scrollMultiplier = container.id === 'latest-shorts' ? 2 : 1;
+
+    const scroll = (direction) => {
+      const firstItem = container.querySelector('.video-card');
+      if (!firstItem) return;
+
+      const itemWidth = firstItem.offsetWidth;
+      const gap = parseInt(window.getComputedStyle(container).gap || '0');
+      const scrollAmount = (itemWidth + gap) * scrollMultiplier;
+
+      container.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    };
+
+    btnLeft.addEventListener('click', () => scroll(-1));
+    btnRight.addEventListener('click', () => scroll(1));
+  });
+}

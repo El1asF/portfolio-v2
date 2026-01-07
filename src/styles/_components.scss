@@ -1,0 +1,639 @@
+@use 'variables' as *;
+
+// --- Buttons & CTA ---
+.cta {
+  display: inline-block;
+  margin-top: 0.75rem;
+  background-color: $color-text;
+  color: $color-primary;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform $trans-speed $trans-ease, background-color $trans-speed;
+
+  --tilt: -1.5deg;
+  --tilt-hover: -3.5deg;
+  transform: rotate(var(--tilt));
+
+  &:hover {
+    transform: translateY(-3px) rotate(var(--tilt-hover));
+  }
+}
+
+// Spezifisch für Channel Button: Keine Farbänderung
+.channel-cta {
+    --tilt: -1deg;
+    --tilt-hover: -2.5deg;
+    
+    &:hover {
+        background-color: $color-text; // Bleibt gleich
+        color: $color-primary; // Bleibt gleich
+    }
+}
+
+// --- Back Button Overlay ---
+.back-button-overlay {
+    position: fixed;
+    top: 90px; // Unterhalb der Navbar (ca 70-80px hoch)
+    left: 20px;
+    z-index: 900;
+    
+    background-color: $color-text; 
+    color: $color-primary; 
+    border: none;
+    width: 42px;
+    height: 42px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+    
+    // Pfeil nach Links
+    &::before {
+      content: '';
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-top: 3px solid currentColor;
+      border-right: 3px solid currentColor;
+      border-top-right-radius: 2px;
+      transform: rotate(-135deg); 
+      margin-left: 4px; 
+    }
+
+    &:hover {
+        transform: scale(1.1);
+    }
+    
+    // Auf Mobile evtl. etwas kleiner oder anders positionieren
+    @media (max-width: 600px) {
+        top: 80px;
+        left: 10px;
+        width: 36px;
+        height: 36px;
+    }
+}
+
+
+// --- Section Titles ---
+.section-title {
+  display: inline-block;
+  background-color: $color-text;
+  color: $color-primary;
+  padding: 0.25rem 0.75rem;
+  font-size: 1.75rem;
+  font-weight: 900;
+  margin: 1.5rem 0 0.4rem;
+  box-shadow: $shadow-std;
+  --tilt: -1deg;
+  --tilt-hover: -3deg; 
+  transform: rotate(var(--tilt));
+  transition: transform $trans-speed; 
+
+  &:hover {
+    transform: translateY(-3px) rotate(var(--tilt-hover));
+  }
+  a { text-decoration: none; display: block; color: inherit; }
+}
+
+// --- Cards (Home Menu) ---
+.menu-cards {
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.menu-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: $color-primary;
+  color: $color-text; 
+  padding: 1.1rem 1.65rem;
+  box-shadow: $shadow-std;
+  width: fit-content;
+  max-width: 100%; 
+  text-decoration: none;
+  --tilt: 0deg;
+  --tilt-hover: 0deg;
+  transform: rotate(var(--tilt));
+  transition: transform $trans-speed, box-shadow $trans-speed, background-color $trans-speed, color $trans-speed;
+
+  &:hover {
+    transform: translateY(-3px) rotate(var(--tilt-hover));
+    box-shadow: $shadow-hover;
+    background-color: $color-primary-dark;
+    color: $color-text; 
+  }
+  .menu-icon { width: 70px; height: 70px; object-fit: contain; }
+  .menu-title { font-size: 3.3rem; font-weight: 900; }
+  
+  @media (max-width: 600px) {
+    padding: 0.9rem 1.35rem;
+    .menu-title { font-size: 2rem; } 
+    .menu-icon { width: 40px; height: 40px; }
+  }
+}
+
+.rot-1 { --tilt: -1.5deg; --tilt-hover: -3.5deg; }
+.rot-2 { --tilt: 1.5deg; --tilt-hover: 3.5deg; }
+.rot-3 { --tilt: -2deg; --tilt-hover: -4deg; }
+
+
+// --- Video Cards & Grids ---
+
+.video-slider-wrapper {
+  position: relative;
+  .video-grid {
+    padding: 1rem 0.5rem 1.5rem 0.5rem; 
+    margin: 0; 
+    scroll-behavior: smooth;
+    display: flex;
+    align-items: stretch; 
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; 
+    &::-webkit-scrollbar { display: none; }
+    
+    // Basis-Schriftgröße für normale Slider Cards
+    // Alle inneren Werte basieren auf em, skalieren also hiermit.
+    font-size: 1rem; 
+    @media(max-width: 768px) { font-size: 0.9rem; }
+  }
+
+  /* Scroll Buttons */
+  .scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%); 
+    z-index: 20;
+    background-color: $color-text; 
+    color: $color-primary; 
+    border: none;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s; 
+
+    @media (max-width: 768px) { display: none; }
+
+    &:hover { transform: translate(0, -50%) scale(1.1); }
+    &:active { transform: translate(0, -50%) scale(0.95); }
+
+    &::before {
+      content: '';
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-top: 4px solid currentColor;
+      border-right: 4px solid currentColor;
+      border-top-right-radius: 3px; 
+    }
+    &.left { left: -20px; &::before { transform: rotate(-135deg); margin-left: 5px; } }
+    &.right { right: -20px; &::before { transform: rotate(45deg); margin-right: 5px; } }
+  }
+}
+
+// Featured Grid
+.featured-grid {
+  display: grid;
+  grid-template-columns: 3.2fr 1fr; 
+  gap: 2rem;
+  align-items: stretch;
+  padding: 1rem 0;
+  
+  // WICHTIG: Hier skalieren wir die Cards hoch!
+  // Da alles in em ist, wachsen Titel, Padding und Overlay mit.
+  font-size: 1.35rem; 
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    font-size: 1rem; // Auf Mobile normale Größe
+  }
+}
+
+// --- Basis Video Card (SCALABLE) ---
+// Alle Maße in 'em', damit sie über font-size am Container gesteuert werden können.
+.video-card {
+  background-color: $color-primary;
+  box-shadow: $shadow-std;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0; 
+  height: auto; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-origin: center center;
+  scroll-snap-align: start;
+
+  > a {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  &:hover { 
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    z-index: 10;
+  }
+
+  .video-thumbnail {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background-color: $color-primary;
+    // Padding in em
+    padding: 0.25em; 
+  }
+
+  .thumbnail-mask {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+    border-radius: 0.3em; 
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &:hover .thumbnail-mask img { transform: scale(1.03); }
+
+  &.long-card .video-thumbnail { 
+    padding: 0.75em 0.75em 0 0.75em; 
+  }
+
+  .video-info {
+    // Relatives Padding
+    padding: 0.6em 0.8em 0.8em 0.8em;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    
+    h4 {
+      font-weight: 500;
+      font-size: 0.9em; // Relativ zur Card-Basisgröße
+      margin-bottom: 0.3em;
+      color: $color-text !important; 
+      display: -webkit-box;
+      -webkit-line-clamp: 2; 
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.3;
+    }
+    .meta {
+      font-weight: 350;
+      font-size: 0.8em; // Relativ
+      color: $color-accent; 
+      margin-top: auto; 
+    }
+  }
+
+  &.short-card {
+    background-color: transparent; 
+    box-shadow: none;
+    
+    .video-thumbnail {
+      aspect-ratio: 9 / 16;
+      padding: 0; 
+      background-color: transparent;
+      flex: 0 0 auto;
+    }
+    .thumbnail-mask { border-radius: 0.4em; }
+    
+    .short-info {
+      background-color: $color-primary;
+      padding: 0.6em;
+      box-shadow: $shadow-std;
+      margin-top: -0.8em; // Überlappung relativ
+      position: relative;
+      z-index: 2;
+      flex: 1; 
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; 
+      
+      h4 { 
+        font-size: 0.85em; 
+        line-height: 1.3;
+        font-weight: 500;
+        -webkit-line-clamp: 3; 
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        color: $color-text !important;
+        margin-bottom: 0.3em;
+      }
+      .meta {
+        font-size: 0.75em;
+        color: $color-accent;
+        font-weight: 350;
+        margin-top: auto; 
+      }
+    }
+    
+    &:hover { transform: translateY(-2px) scale(1.02); }
+    &:hover .thumbnail-mask img { transform: scale(1.03); }
+  }
+}
+
+// --- Featured Short ---
+.featured-grid .short-card.featured-short {
+  width: 100%; 
+  height: 100%; 
+}
+
+// --- Karussell Berechnungen ---
+#latest-videos .video-card {
+  min-width: calc((100% - 3rem) / 3);
+  width: calc((100% - 3rem) / 3);
+  @media (max-width: 850px) { 
+     min-width: calc((100% - 1.5rem) / 2);
+     width: calc((100% - 1.5rem) / 2);
+  }
+  @media (max-width: 550px) {
+     min-width: 85%;
+     width: 85%;
+  }
+}
+
+#latest-shorts .short-card {
+  min-width: calc((100% - 9rem) / 7);
+  width: calc((100% - 9rem) / 7);
+  @media (max-width: 1024px) { 
+     min-width: calc((100% - 4.5rem) / 4);
+     width: calc((100% - 4.5rem) / 4);
+  }
+  @media (max-width: 600px) { 
+     min-width: calc((100% - 3rem) / 3);
+     width: calc((100% - 3rem) / 3);
+  }
+}
+
+
+// --- Duration Overlay ---
+// Auch hier nutzen wir em für Position und Größe
+.duration-overlay {
+  position: absolute;
+  bottom: 0.6em; 
+  right: 1.65em;
+  background-color: rgba($color-text, 0.75);
+  color: $color-bg;
+  font-family: $font-family-main;
+  font-weight: 500;
+  font-size: 0.7em; 
+  padding: 0.175em 0.45em;
+  border-radius: 0.3em;
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.short-card .duration-overlay {
+  bottom: 1.7em; 
+  right: 0.6em;
+  font-size: 0.65em; 
+}
+
+// --- Text & Impressum Box ---
+.impressum-box, .text-box {
+  background-color: $color-primary;
+  padding: 1rem 1.5rem;
+  box-shadow: $shadow-std;
+  width: 100%;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  h2 { margin-bottom: 1rem; font-size: 1.5rem; }
+  p { margin-bottom: 1rem; }
+  word-wrap: break-word; 
+}
+
+// --- Kontakt Formular ---
+.contact-container {
+  display: block;
+  margin: 4rem auto;
+  position: relative;
+  width: 100%;
+  max-width: 448px;
+}
+.contact-label {
+  background-color: $color-text;
+  color: $color-primary;
+  font-weight: 900;
+  padding: 0.3rem 0.8rem;
+  box-shadow: $shadow-std;
+  transform: rotate(-1deg);
+  position: absolute;
+  top: -1.2rem;
+  left: 4rem;
+  z-index: 2;
+  @media(max-width: 500px) { left: 1rem; }
+}
+.contact-card {
+  background-color: $color-primary;
+  padding: 1.5rem;
+  box-shadow: $shadow-std;
+  width: 100%;
+  form { display: flex; flex-direction: column; gap: 0.5rem; }
+  label { font-weight: 500; }
+  input, textarea {
+    padding: 0.5rem;
+    border: none;
+    background-color: $color-bg;
+    color: $color-text;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 100%;
+  }
+  button {
+    background-color: $color-accent;
+    color: $color-text;
+    border: none;
+    padding: 0.6rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color $trans-speed;
+    &:hover { background-color: $color-accent-hover; }
+    &:disabled { background-color: #999; cursor: not-allowed; }
+  }
+}
+
+// --- Status Meldungen Formular ---
+.form-status {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 2px;
+  font-weight: 600;
+  &.success { background-color: #4caf50; color: white; }
+  &.error { background-color: #f44336; color: white; }
+}
+
+// --- Timeline ---
+.vertical-timeline {
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 4px solid $color-accent;
+  @media (max-width: 600px) { padding-left: 1rem; }
+  .timeline-item {
+    margin-bottom: 3rem;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: stretch;
+    &::before {
+      content: '';
+      position: absolute;
+      left: -1.2rem; 
+      top: 0.3rem;
+      width: 0.8rem;
+      height: 0.8rem;
+      background-color: $color-accent;
+      box-shadow: 0 0 0 4px $color-bg;
+      @media (max-width: 600px) { left: -0.95rem; } 
+    }
+  }
+  .timeline-date { font-weight: 600; color: $color-accent; margin-bottom: 0.25rem; }
+  .project-name-box {
+    display: inline-block;
+    background-color: $color-text;
+    color: $color-primary;
+    padding: 0.2rem 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-right: 0.4rem;
+    box-shadow: $shadow-std;
+    margin-bottom: 0.5rem;
+  }
+  .project-description { font-size: 1.1rem; font-weight: 500; display: block;}
+  .project-role { margin-top: 0.5rem; font-weight: 350;}
+  .timeline-video {
+    flex: 1 1 40%;
+    min-width: 280px; 
+    display: flex;
+    iframe, img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      box-shadow: $shadow-std;
+    }
+  }
+  .timeline-content { flex: 1 1 50%; min-width: 280px; }
+}
+
+// --- Channel Info Card ---
+.channel-card {
+  background-color: $color-primary;
+  padding: 1.5rem;
+  box-shadow: $shadow-std;
+  width: 100%;
+  margin-bottom: 1rem;
+  
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: center; 
+  gap: 1.5rem; 
+  
+  .channel-left {
+    flex: 0 0 auto; 
+    img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      clip-path: circle(50%);
+    }
+  }
+  
+  .channel-middle {
+    flex: 1 1 300px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    h3 { 
+      font-size: 2rem; 
+      font-weight: 900; 
+      line-height: 1.2;
+      margin-bottom: 0.25rem;
+      .highlight { color: $color-accent; }
+      @media(max-width: 600px) { font-size: 1.6rem; }
+    }
+    .subscriber-count { 
+      color: $color-accent; 
+      font-weight: 300; 
+      margin-bottom: 0.5rem;
+    }
+    .cta { margin-top: 0.5rem; align-self: flex-start; }
+  }
+  
+  .channel-right {
+    flex: 1 1 100%; 
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap; 
+    justify-content: flex-end; 
+    @media (min-width: 950px) {
+        flex: 0 0 auto;
+        margin-left: auto;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex-wrap: nowrap;
+    }
+    @media (max-width: 949px) {
+        justify-content: flex-start;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        padding-top: 1rem;
+        width: 100%;
+    }
+  }
+}
+
+// Social Icons - ZOOM FIX
+.social-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  text-decoration: none;
+  color: $color-text;
+  
+  // Verhindert Layout-Shift beim Zoomen
+  // Wir zoomen nur das Bild mit Transform
+  img { 
+    width: 28px; 
+    height: 28px; 
+    object-fit: contain;
+    flex-shrink: 0;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); // Bouncy effect
+  }
+  
+  &:hover img {
+      // WICHTIG: Transform statt Width/Height ändern!
+      transform: scale(1.2); 
+  }
+  
+  .social-text {
+     display: flex; 
+     flex-direction: column; 
+     line-height: 1.1;
+     white-space: nowrap; 
+     .username { font-weight: 500; font-size: 0.9rem; }
+     .followers { font-size: 0.75rem; color: $color-accent; font-weight: 350; }
+  }
+}

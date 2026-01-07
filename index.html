@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio von Elias Friderici - Content Creator, Filmemacher und Medienproduktions-Student. Entdecke Filmprojekte, DIY-Builds und YouTube-Videos." />
+  <title>Elias Friderici – Portfolio</title>
+  
+  <!-- CRITICAL CSS: Verhindert FOUC zuverlässig -->
+  <style>body { opacity: 0; transition: opacity 0.3s ease-in-out; }</style>
+</head>
+<body>
+  
+  <div id="header-placeholder"></div>
+
+  <section id="home" class="hero home-hero">
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1 class="name-box">Elias Friderici</h1>
+        <p class="description">
+          <span class="tag-label">Content Creator und Filmemacher</span> Willkommen auf meiner Portfolio-Seite! Als Student der Medienproduktion mit Schwerpunkt Bild- und Lichtgestaltung bringe ich meine Leidenschaft für DIY-Projekte und filmisches Storytelling zusammen. Entdecke meine aktuellen Arbeiten, meinen Werdegang und einen Einblick in meinen YouTube-Kanal.
+        </p>
+      </div>
+      <div class="hero-image">
+        <img src="/src/assets/images/portrait.jpg" alt="Portrait von Elias Friderici" />
+      </div>
+    </div>
+  </section>
+
+  <section class="cards-section">
+    <div class="container menu-cards">
+      <a href="youtube.html" class="menu-card rot-1">
+        <img src="/src/assets/images/youtube.png" alt="YouTube Icon" class="menu-icon" />
+        <span class="menu-title">Mein YouTube-Kanal</span>
+      </a>
+      <a href="filmprojects.html" class="menu-card rot-2">
+        <img src="/src/assets/images/videocam.png" alt="Filmprojekte Icon" class="menu-icon" />
+        <span class="menu-title">Filmprojekte</span>
+      </a>
+      <a href="weitere-arbeiten.html" class="menu-card rot-3">
+        <img src="/src/assets/images/other-icon.png" alt="Andere Arbeiten Icon" class="menu-icon" />
+        <span class="menu-title">Andere Arbeiten</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="kontakt" class="section contact-section">
+    <div class="container contact-container">
+      <div class="contact-label">Kontakt</div>
+      <div class="contact-card">
+        <form action="https://formspree.io/f/mwvpyykd" method="POST">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required />
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email" required />
+          <label for="message">Nachricht</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <input type="text" name="_gotcha" style="display:none" />
+          <button type="submit">Senden</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+
+  <script type="module" src="/src/js/indexPage.js"></script>
+  <script type="module" src="/src/js/app.js"></script>
+</body>
+</html>

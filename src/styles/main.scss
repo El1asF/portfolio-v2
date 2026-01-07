@@ -1,0 +1,16 @@
+// src/styles/main.scss
+
+// 0. Fonts (ganz oben)
+@use 'fonts';
+
+// 1. Variablen laden
+@use 'variables';
+
+// 2. Basis-Reset und Typografie
+@use 'base';
+
+// 3. Layout (Nav, Footer, Sections)
+@use 'layout';
+
+// 4. Komponenten (Cards, Buttons, etc.)
+@use 'components';

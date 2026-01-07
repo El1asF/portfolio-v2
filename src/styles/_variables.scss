@@ -1,0 +1,35 @@
+// src/styles/_variables.scss
+
+// --- Farben ---
+$color-bg:       #f0efee;
+$color-primary:  #dfc8a5; // Sandbeige
+$color-primary-dark: #d2b895; // Für Hover-Effekte
+$color-text:     #2e2b2a; // Kohleschwarz
+$color-accent:   #b27a1b; // Kupfergold
+$color-accent-hover: #946315;
+
+// --- Typografie ---
+$font-family-main: 'Rubik', sans-serif;
+
+// --- Schatten ---
+$shadow-color: rgba(46, 43, 42, 0.08); 
+
+// Standard-Schatten
+$shadow-std: 0 2px 4px $shadow-color, 0 -2px 4px $shadow-color, 2px 0 4px $shadow-color, -2px 0 4px $shadow-color;
+
+// Hover-Schatten
+$shadow-hover: 0 4px 8px rgba(46, 43, 42, 0.12);
+
+// Header-Schatten
+$shadow-header: 0 12px 24px rgba(46, 43, 42, 0.09);
+
+// NEU: Inner Shadow für Thumbnails (Vignette)
+$shadow-inner: inset 0 0 10px rgba(0, 0, 0, 0.35);
+
+// --- Layout ---
+$max-width: 1120px;
+$border-radius-video: 0.5rem; 
+
+// --- Animationen ---
+$trans-speed: 0.2s;
+$trans-ease: ease;

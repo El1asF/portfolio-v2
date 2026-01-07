@@ -1,0 +1,276 @@
+// src/styles/_layout.scss
+@use 'variables' as *;
+
+// --- Navbar ---
+.navbar {
+  background-color: $color-bg;
+  background-image:
+    linear-gradient(to right, rgba(46, 43, 42, 0.07) 0, rgba(46, 43, 42, 0.07) 4px, transparent 4px),
+    linear-gradient(to bottom, rgba(46, 43, 42, 0.07) 0, rgba(46, 43, 42, 0.07) 4px, transparent 4px);
+  background-size: 34px 34px;
+  background-repeat: repeat;
+  
+  box-shadow: $shadow-header;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 2em;
+  }
+}
+
+.logo {
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: $color-text;
+  span { display: none; }
+}
+
+// --- Navigation Links ---
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 0.8rem;
+
+  li a {
+    display: inline-block;
+    background-color: $color-primary;
+    color: $color-text;
+    font-weight: 900;
+    padding: 0.35rem 0.9rem;
+    box-shadow: $shadow-std;
+    text-decoration: none;
+    
+    --tilt: 0deg;
+    --tilt-hover: 0deg;
+    
+    transform: rotate(var(--tilt));
+    transition: transform $trans-speed $trans-ease, background-color $trans-speed;
+
+    &:hover {
+      background-color: $color-primary-dark;
+      transform: translateY(-3px) rotate(var(--tilt-hover));
+    }
+
+    &.active {
+      background-color: $color-text;
+      color: $color-primary;
+    }
+  }
+
+  li:nth-child(1) a { --tilt: -1.5deg; --tilt-hover: -3.5deg; }
+  li:nth-child(2) a { --tilt: 1.8deg; --tilt-hover: 3.8deg; }
+  li:nth-child(3) a { --tilt: -0.9deg; --tilt-hover: -2.9deg; }
+}
+
+// --- Hamburger Menü (Mobile) ---
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  gap: 4px;
+  background: none;
+  border: none;
+
+  span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: $color-text;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  &.open {
+    span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
+  }
+}
+
+// --- Mobile Navigation ---
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background-color: $color-bg;
+    background-image:
+      linear-gradient(to right, rgba(46, 43, 42, 0.07) 0, rgba(46, 43, 42, 0.07) 4px, transparent 4px),
+      linear-gradient(to bottom, rgba(46, 43, 42, 0.07) 0, rgba(46, 43, 42, 0.07) 4px, transparent 4px);
+    background-size: 34px 34px;
+    background-repeat: repeat;
+    
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    display: none;
+    box-shadow: 0 4px 8px $shadow-color;
+    z-index: 99;
+
+    &.open { display: flex; }
+  }
+
+  .hamburger { display: flex; }
+}
+
+// --- Back Button Overlay (NEU) ---
+.back-btn-overlay {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 900;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: $color-text;
+  color: $color-primary;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 1rem 1.2rem;
+  border-radius: 0; // Eckig bleiben wie Design System
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  
+  --tilt: 2deg;
+  --tilt-hover: 4deg;
+  transform: rotate(var(--tilt));
+  transition: transform $trans-speed $trans-ease, background-color $trans-speed;
+  
+  &:hover {
+    transform: translateY(-5px) rotate(var(--tilt-hover));
+    background-color: lighten($color-text, 10%);
+  }
+  
+  &::before {
+    content: '←';
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
+  
+  @media (max-width: 768px) {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+// --- Hero & Sections ---
+.hero {
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+
+  &.home-hero {
+    .hero-content {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .hero-text { flex: 1 1 300px; }
+    
+    .name-box {
+      display: inline-block;
+      background-color: $color-primary;
+      color: $color-text;
+      padding: 0.4rem 0.8rem;
+      font-size: 2.5rem;
+      font-weight: 900;
+      box-shadow: $shadow-std;
+      transform: rotate(-2deg);
+      margin-bottom: 2.5rem;
+      
+      @media (min-width: 768px) { font-size: 3rem; }
+    }
+
+    .tag-label {
+      display: inline-block;
+      background-color: $color-text;
+      color: $color-primary;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1;
+      padding: 0.2rem 0.45rem;
+      margin-right: 0.25rem;
+      box-shadow: 0 1px 2px $shadow-color;
+    }
+
+    .hero-image {
+      flex: 0 0 280px;
+      width: 280px;
+      text-align: center;
+      
+      img {
+        width: 100%;
+        height: auto;
+        box-shadow: 0 3px 6px rgba(46, 43, 42, 0.18);
+      }
+    }
+  }
+}
+
+.page-heading {
+  padding-top: 7rem;
+  padding-bottom: 0.5rem;
+  
+  h1 {
+    display: inline-block;
+    background-color: $color-primary;
+    color: $color-text;
+    padding: 0.4rem 1rem;
+    font-size: 2.5rem;
+    font-weight: 900;
+    box-shadow: 0 3px 6px rgba(46, 43, 42, 0.18);
+    transform: rotate(-2deg);
+  }
+}
+
+.section {
+  padding-top: 2rem;
+  padding-bottom: 0rem;
+}
+
+// --- YouTube Page Spezifische Animationen ---
+.youtube-page section:nth-of-type(3) .section-title { --tilt: -1.5deg; --tilt-hover: -3.5deg; }
+.youtube-page section:nth-of-type(4) .section-title { --tilt: 1.8deg; --tilt-hover: 3.8deg; }
+.youtube-page section:nth-of-type(5) .section-title { --tilt: -0.9deg; --tilt-hover: -2.9deg; }
+
+
+// --- Footer ---
+.footer {
+  background-color: $color-primary;
+  color: $color-text;
+  padding: 1rem 0;
+  margin-top: 2rem;
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  p, a { font-weight: 300; font-size: 0.9rem; }
+  
+  .footer-links {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+// --- Placeholders ---
+#header-placeholder { display: block; }
+#footer-placeholder { display: block; }
