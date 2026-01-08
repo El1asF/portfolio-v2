@@ -3,24 +3,46 @@
     "id": "beispiel-projekt",
     "titel": "Beispiel Projekt",
     "beschreibung": "Ein Beispiel für ein anderes Projekt ohne Video, nur mit Bild.",
+    "langbeschreibung": "Das ist ein Platzhalter-Projekt. Es zeigt, wie ein Eintrag aussieht, der nur aus einem Bild und Text besteht, ohne Video-Embed oder Galerie.",
     "link": "https://example.com",
-    "image": "/src/assets/images/placeholder.jpg",
-    "datum": "2024-01"
+    "image": "placeholder.jpg",
+    "datum": "2024-01",
+    "aufgaben": ["Konzept", "Entwurf"],
+    "infoTiles": [
+      {
+        "title": "Status",
+        "content": "Dieses Projekt dient als Template und ist aktuell nur ein Platzhalter."
+      }
+    ]
   },
   {
     "id": "mega-showcase",
     "titel": "Maximales Showcase",
     "beschreibung": "Dieses Projekt demonstriert alle Funktionen: Video-Embed, Galerie, BTS-Bilder und ausführliche Beschreibung.",
-    "langbeschreibung": "Hier ist Platz für die ganze Story hinter dem Projekt. Du kannst erklären, welche Technik verwendet wurde (z.B. Sony FX3, DaVinci Resolve) und wie der Workflow war.\n\nDer Text unterstützt Zeilenumbrüche (einfach im JSON \\n nutzen). Das hier ist ein neuer Absatz.\n\nUnten in der Galerie siehst du Behind-The-Scenes Material und weitere Ausschnitte.",
+    "langbeschreibung": "Hier ist Platz für die ganze Story hinter dem Projekt. Du kannst erklären, welche Herausforderungen es gab und wie du sie gelöst hast.\n\nDer Text unterstützt Zeilenumbrüche (einfach im JSON '\\n' nutzen). Das hier ist ein neuer Absatz, der den Textfluss auflockert.\n\nUnten in der Galerie siehst du Behind-The-Scenes Material und weitere Ausschnitte aus der Produktion.",
     "aufgaben": ["Regie", "DOP", "Color Grading", "Sound Design"],
     "datum": "2024-03",
-    "image": "/src/assets/images/showcase-thumb.jpg",
+    "image": "showcase-thumb.jpg",
     "videolink": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     "link": "https://eliasfriderici.com",
+    "infoTiles": [
+      {
+        "title": "Kamera & Technik",
+        "content": "Gedreht auf Sony FX3 in S-Log3. Als Objektive kamen Vintage Canon FD Lenses zum Einsatz, um den digitalen Look zu brechen."
+      },
+      {
+        "title": "Post-Production",
+        "content": "Schnitt und Grading komplett in DaVinci Resolve Studio. Sound Design wurde in Fairlight gemischt."
+      },
+      {
+        "title": "Zeitraum",
+        "content": "Vorproduktion: 2 Wochen\nDreh: 3 Tage\nPostproduktion: 1 Woche"
+      }
+    ],
     "gallery": [
       {
         "type": "image",
-        "src": "/src/assets/images/bts-1.jpg"
+        "src": "bts-1.jpg"
       },
       {
         "type": "video",
@@ -28,11 +50,11 @@
       },
       {
         "type": "image",
-        "src": "/src/assets/images/bts-2.jpg"
+        "src": "bts-2.jpg"
       },
       {
         "type": "image",
-        "src": "/src/assets/images/result-shot.jpg"
+        "src": "result-shot.jpg"
       }
     ]
   }

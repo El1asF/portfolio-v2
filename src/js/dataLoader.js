@@ -1,34 +1,20 @@
 // src/js/dataLoader.js
 
-// Statische Imports der JSON-Dateien
-// Vite bündelt diese Daten direkt in den Build.
 import filmprojekteData from '../data/filmprojekte.json';
 import otherProjectsData from '../data/otherprojects.json';
 
-// Falls du noch mehr Daten hast, hier importieren:
-// import skillsData from '../data/skills.json';
-// import lebenslaufData from '../data/lebenslauf.json';
+// Wir geben die Daten sicher zurück. 
+// Falls imports undefined wären (was bei JSON Modulen selten ist, aber möglich), fangen wir es ab.
 
 export async function loadFilmprojekte() {
-  return filmprojekteData;
+  return filmprojekteData || [];
 }
 
 export async function loadOtherProjects() {
-  return otherProjectsData;
+  return otherProjectsData || [];
 }
 
-export async function loadLebenslauf() {
-  // return lebenslaufData; 
-  return [];
-}
-
-export async function loadSkills() {
-  // return skillsData;
-  return [];
-}
-
-// --- Helper ---
-
+// Helper Funktionen (unverändert wichtig)
 export function formatDate(raw) {
   if (!raw) return '';
   if (raw.includes('heute')) return raw;

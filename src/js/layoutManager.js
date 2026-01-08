@@ -3,7 +3,7 @@
 
 /**
  * Injiziert den Header (Navbar)
- * Jetzt inklusive integriertem Back-Button
+ * Jetzt inklusive integriertem Back-Button mit Smart-Logic
  */
 export function injectHeader() {
   const headerPlaceholder = document.getElementById('header-placeholder');
@@ -15,7 +15,6 @@ export function injectHeader() {
   const isHome = page === 'index.html' || page === '';
 
   // Back-Button HTML (nur wenn nicht Startseite)
-  // Wir nutzen history.back(), um zur vorherigen Seite zu springen
   const backBtnHtml = isHome 
     ? '' 
     : `<button id="nav-back-btn" class="nav-back-btn" aria-label="Zurück"></button>`;
@@ -48,13 +47,29 @@ export function injectHeader() {
   if (!isHome) {
       const btn = document.getElementById('nav-back-btn');
       if (btn) {
-          btn.addEventListener('click', () => {
-              window.history.back();
-          });
+          btn.addEventListener('click', handleBackClick);
       }
   }
 
   initMobileMenu();
+}
+
+/**
+ * Smarte Back-Button Logik
+ */
+function handleBackClick() {
+    // 1. Prüfen, ob es einen Verlauf innerhalb der Seite gibt (Referrer check)
+    // document.referrer gibt die URL zurück, von der man kam.
+    // Wir prüfen, ob die eigene Domain (hostname) darin vorkommt.
+    const hasInternalHistory = document.referrer && document.referrer.includes(window.location.hostname);
+
+    if (hasInternalHistory) {
+        // Normales Zurück
+        window.history.back();
+    } else {
+        // Fallback: Wenn man direkt von Google/Link kommt, geht man zur Startseite
+        window.location.href = 'index.html';
+    }
 }
 
 /**
@@ -93,7 +108,7 @@ function initMobileMenu() {
 }
 
 /**
- * Initialisiert Scroll-Buttons (bleibt unverändert)
+ * Initialisiert Scroll-Buttons
  */
 export function initScrollControls() {
   const sliders = document.querySelectorAll('.video-slider-wrapper');

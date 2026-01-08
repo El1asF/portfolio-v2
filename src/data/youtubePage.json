@@ -1,0 +1,32 @@
+{
+  "socials": [
+  {
+    "platform": "Instagram",
+    "username": "@el1as.f_yt",
+    "followers": 1500,
+    "url": "https://instagram.com/el1as.f_yt"
+  },
+  {
+    "platform": "TikTok",
+    "username": "@El1as.F",
+    "followers": 1500,
+    "url": "https://tiktok.com/@El1as.F"
+  },
+  {
+    "platform": "Facebook",
+    "username": "@el1as.fr",
+    "followers": 1200,
+    "url": "https://facebook.com/el1as.fr"
+  }
+  ],
+  "infoTiles": [
+    {
+      "title": "Inhalt",
+      "content": "Auf meinem Kanal lade ich Bastelvideos zu allen möglichen Themen, aber hauptsächlich baue ich kleine selbstgebaute Elektrofahrzeuge."
+    },
+{
+      "title": "Mein Equipment",
+      "content": "Ich filme aktuell mit einer Sony a7III und dem Sigma 20mm f/1.4 Weitwinkelobjektiv. Mein Schnitt-Workflow basiert komplett auf DaVinci Resolve Studio."
+    }
+  ]
+}

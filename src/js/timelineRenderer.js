@@ -1,23 +1,32 @@
-// src/js/timelineRenderer.js
 import { formatDate, formatAufgaben } from './dataLoader.js';
 
-/**
- * Rendert eine Timeline (Film oder Andere) in einen Container.
- */
+function getImageUrl(imageSource) {
+    if (!imageSource) return null;
+    if (imageSource.startsWith('http')) return imageSource;
+    const cleanName = imageSource.replace(/^(\.\/|\/)/, '');
+    const filename = cleanName.split('/').pop();
+    try {
+        return new URL(`../assets/images/${filename}`, import.meta.url).href;
+    } catch (e) {
+        // Fallback: Wenn Vite das Bild nicht bündeln kann, nutzen wir den rohen Pfad.
+        // Das verhindert, dass die ganze Seite crasht.
+        return imageSource;
+    }
+}
+
 export function renderTimeline(items, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   if (!items || items.length === 0) {
-    container.innerHTML = '<p class="text-box">Aktuell keine Einträge vorhanden.</p>';
+    container.innerHTML = '<p class=\"text-box\">Aktuell keine Einträge vorhanden.</p>';
     return;
   }
 
-  // Layout vorbereiten
   container.innerHTML = '';
   container.classList.add('vertical-timeline');
 
-  // Sortieren nach Datum (neu -> alt)
+  // Sortierung: Neueste zuerst
   items.sort((a, b) => {
     const dateA = (a.datum || '').split('-');
     const dateB = (b.datum || '').split('-');
@@ -35,23 +44,19 @@ function createTimelineItem(project) {
   const timelineItem = document.createElement('div');
   timelineItem.className = 'timeline-item';
   
-  // 1. Link-Bestimmung
-  // - ID vorhanden? -> Detailseite
-  // - Keine ID, aber Link? -> Externer Link
-  // - Weder noch -> Kein Link
-  
+  // URL Logik
   let targetUrl = null;
   let isInternalDetail = false;
 
   if (project.id) {
+      // WICHTIG: .html Endung für Netlify Sicherheit
       targetUrl = `project-detail.html?id=${project.id}`;
       isInternalDetail = true;
   } else if (project.link) {
       targetUrl = project.link;
   }
 
-  // 2. Titel-Element bauen
-  // Wenn Link existiert, machen wir den Titel interaktiv (Klasse .interactive-title)
+  // Titel
   let titleHtml = '';
   if (targetUrl) {
       const targetAttr = isInternalDetail ? '' : 'target="_blank"';
@@ -64,29 +69,28 @@ function createTimelineItem(project) {
       titleHtml = `<span class="project-name-box">${project.titel}</span>`;
   }
 
-  // 3. Medien-Content bauen (Bild oder Video)
+  // Medien
   let mediaHtml = '';
-  
-  // A) Bild ist gesetzt
   if (project.image && project.image.trim() !== '') {
-      const imgContent = `<img src="${project.image.trim()}" alt="${project.titel}" />`;
+      const resolvedImage = getImageUrl(project.image.trim());
+      const imgContent = `<img src="${resolvedImage}" alt="${project.titel}" loading="lazy" />`;
       
-      // Wenn Link existiert, Bild verlinken
       if (targetUrl) {
           const targetAttr = isInternalDetail ? '' : 'target="_blank"';
           mediaHtml = `<a href="${targetUrl}" ${targetAttr}>${imgContent}</a>`;
       } else {
           mediaHtml = imgContent;
       }
-      
   } 
-  // B) Video ist gesetzt
   else if (project.videolink && project.videolink.trim() !== '') {
       let embedSrc = project.videolink.trim();
       try {
-        const urlObj = new URL(project.videolink);
-        const vid = urlObj.searchParams.get('v');
-        if (vid) embedSrc = `https://www.youtube-nocookie.com/embed/${vid}`;
+        if(embedSrc.includes('youtube') || embedSrc.includes('youtu.be')) {
+             const u = new URL(embedSrc);
+             let vid = u.searchParams.get('v');
+             if(!vid && embedSrc.includes('youtu.be')) vid = u.pathname.slice(1);
+             if (vid) embedSrc = `https://www.youtube-nocookie.com/embed/${vid}`;
+        }
       } catch (e) {}
       
       mediaHtml = `
@@ -99,7 +103,6 @@ function createTimelineItem(project) {
       `;
   }
 
-  // Wenn Medien vorhanden sind, in die Card-Struktur verpacken
   let finalMediaBlock = '';
   if (mediaHtml) {
       finalMediaBlock = `
@@ -115,7 +118,6 @@ function createTimelineItem(project) {
       `;
   }
 
-  // HTML zusammenbauen
   timelineItem.innerHTML = `
     <div class="timeline-content">
       <div class="timeline-date">${formatDate(project.datum)}</div>

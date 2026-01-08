@@ -2,8 +2,9 @@
 import { formatNumber, formatDate, formatDurationISO } from './api.js';
 
 // Importiere generierte und statische Daten
+// ACHTUNG: Jetzt laden wir die neue youtubePage.json
 import youtubeData from '../data/youtubeData.json';
-import socialsData from '../data/socials.json';
+import youtubePageData from '../data/youtubePage.json';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!youtubeData || youtubeData.error) {
@@ -22,28 +23,27 @@ function renderChannelInfo() {
   const container = document.getElementById('yt-channel');
   if (!container) return;
 
+  // 1. Channel Info (wie vorher)
   const { channel } = youtubeData;
   if (!channel) return;
 
   const styledTitle = channel.title ? channel.title.replace(/1/g, '<span class="highlight">1</span>') : 'Kanal';
   
-  // Thumbnail
   const thumb = channel.thumbnails?.high?.url || 
                 channel.thumbnails?.medium?.url || 
                 channel.thumbnails?.default?.url || 
                 '/src/assets/images/portrait.jpg'; 
 
-  const socialHtml = socialsData.map(s => {
-    // FIX: Wir nutzen new URL(...), damit Vite die Bilder aus src/assets/images auch im JS findet.
-    // Das funktioniert analog zum HTML-Tag auf der Startseite.
+  // Socials laden wir jetzt aus der neuen Struktur "youtubePageData.socials"
+  const socials = youtubePageData.socials || [];
+
+  const socialHtml = socials.map(s => {
     let iconPath;
     try {
-        // Der Pfad muss relativ zu DIESER js-Datei sein.
-        // Also: Raus aus 'js' (..), rein in 'assets/images'
         iconPath = new URL(`../assets/images/${s.platform.toLowerCase()}-icon.png`, import.meta.url).href;
     } catch (e) {
         console.warn('Icon nicht gefunden:', s.platform);
-        iconPath = ''; // Fallback, falls Datei fehlt
+        iconPath = ''; 
     }
     
     return `
@@ -57,6 +57,27 @@ function renderChannelInfo() {
     `;
   }).join('');
 
+  // 2. Custom Tiles (Info-Kacheln) bauen
+  const tiles = youtubePageData.infoTiles || [];
+  let tilesHtml = '';
+
+  if (tiles.length > 0) {
+      tilesHtml = '<div class="info-tiles-grid">';
+      tiles.forEach(tile => {
+          tilesHtml += `
+            <div class="info-tile-wrapper">
+                <div class="info-tile-label">${tile.title}</div>
+                <div class="info-tile-content">
+                    <p>${tile.content}</p>
+                </div>
+            </div>
+          `;
+      });
+      tilesHtml += '</div>';
+  }
+
+  // 3. Alles zusammenfügen
+  // WICHTIG: Keine <p class="channel-desc"> mehr hier!
   container.innerHTML = `
     <div class="channel-card">
       <div class="channel-left">
@@ -65,6 +86,7 @@ function renderChannelInfo() {
       <div class="channel-middle">
         <h3>${styledTitle}</h3>
         <p class="subscriber-count">${formatNumber(channel.subscriberCount)} Abonnenten • ${channel.videoCount} Videos</p>
+        
         <a href="https://www.youtube.com/@El1asF?sub_confirmation=1" target="_blank" class="cta channel-cta">
           Zum YouTube Kanal
         </a>
@@ -73,6 +95,7 @@ function renderChannelInfo() {
          ${socialHtml}
       </div>
     </div>
+    ${tilesHtml} <!-- Hier werden die Kacheln unter die Box gesetzt -->
   `;
 }
 

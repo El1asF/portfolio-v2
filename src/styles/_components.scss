@@ -1,3 +1,4 @@
+@use 'sass:color'; // WICHTIG: Modul für Farb-Funktionen laden
 @use 'variables' as *;
 
 // --- Buttons & CTA ---
@@ -30,8 +31,6 @@
         color: $color-primary; 
     }
 }
-
-// (Alter Back Button Overlay Code wurde hier entfernt)
 
 // --- Section Titles ---
 .section-title {
@@ -555,6 +554,52 @@
   }
 }
 
+// --- Custom Tiles Grid (NEU) ---
+.info-tiles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem; 
+    margin-top: 2rem;
+    
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 3rem; // Mehr Abstand mobil wegen überlappenden Labels
+    }
+}
+
+.info-tile-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.info-tile-label {
+    // Exakte Kopie von .contact-label aber leicht angepasst
+    background-color: $color-text;
+    color: $color-primary;
+    font-weight: 900;
+    padding: 0.3rem 0.8rem;
+    box-shadow: $shadow-std;
+    transform: rotate(-1deg);
+    position: absolute;
+    top: -1.2rem;
+    left: 2rem; // Etwas weiter links als Kontakt
+    z-index: 2;
+}
+
+.info-tile-content {
+    // Exakte Kopie von .contact-card
+    background-color: $color-primary;
+    padding: 1.5rem;
+    box-shadow: $shadow-std;
+    width: 100%;
+    height: 100%; // Damit beide gleich hoch sind
+    
+    p {
+        line-height: 1.6;
+    }
+}
+
+
 // --- Status Meldungen Formular ---
 .form-status {
   padding: 1rem;
@@ -614,7 +659,8 @@
         
         &:hover {
              transform: translateY(-2px) rotate(-1deg);
-             background-color: lighten($color-text, 10%);
+             // FIX: Deprecated lighten() entfernt -> color.adjust
+             background-color: color.adjust($color-text, $lightness: 10%);
         }
     }
   }
@@ -673,6 +719,7 @@
       font-weight: 300; 
       margin-bottom: 0.5rem;
     }
+    
     .cta { margin-top: 0.5rem; align-self: flex-start; }
   }
   

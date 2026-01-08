@@ -12,28 +12,23 @@
 
   <main>
     <section class="page-heading">
-      <div class="container">
+      <div class="container heading-flex">
+        <!-- Titel Links -->
         <h1 id="detail-title">Lade Projekt...</h1>
+        <!-- Datum Rechts -->
+        <div id="detail-date" class="project-date-badge"></div>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
         
-        <!-- Großes Medium -->
+        <!-- Großes Medium (Video/Bild) -->
         <div id="detail-main-media" class="detail-hero-media"></div>
 
-        <!-- Text Bereich -->
-        <div class="detail-content-box">
-          <div class="meta-info">
-            <span id="detail-date" class="meta-date"></span>
-            <div id="detail-roles" class="meta-roles"></div>
-          </div>
-          <div class="text-content">
-            <p id="detail-description" class="lead-text"></p>
-            <div id="detail-long-description" class="long-text"></div>
-          </div>
-        </div>
+        <!-- Dynamischer Bereich für alle Kacheln -->
+        <!-- Hier werden Beschreibung, Info-Kacheln und Langtext per JS injiziert -->
+        <div id="dynamic-content-area" style="display: flex; flex-direction: column; gap: 3rem; margin-bottom: 3rem;"></div>
 
         <!-- Galerie -->
         <div id="gallery-section" style="display: none;">
