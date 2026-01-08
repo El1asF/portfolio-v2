@@ -217,7 +217,7 @@
       img {
         width: 100%;
         height: auto;
-        box-shadow: 0 3px 6px rgba(46, 43, 42, 0.18);
+        mask-image: linear-gradient(to top, transparent 0%, black 10%, black 100%);
       }
     }
   }
