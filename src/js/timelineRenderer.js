@@ -8,8 +8,6 @@ function getImageUrl(imageSource) {
     try {
         return new URL(`../assets/images/${filename}`, import.meta.url).href;
     } catch (e) {
-        // Fallback: Wenn Vite das Bild nicht bündeln kann, nutzen wir den rohen Pfad.
-        // Das verhindert, dass die ganze Seite crasht.
         return imageSource;
     }
 }
@@ -49,8 +47,8 @@ function createTimelineItem(project) {
   let isInternalDetail = false;
 
   if (project.id) {
-      // WICHTIG: .html Endung für Netlify Sicherheit
-      targetUrl = `project-detail.html?id=${project.id}`;
+      // WICHTIG: Slash am Anfang (absolute Pfade) verhindert Fehler auf Unterseiten/Netlify
+      targetUrl = `/project-detail.html?id=${project.id}`;
       isInternalDetail = true;
   } else if (project.link) {
       targetUrl = project.link;

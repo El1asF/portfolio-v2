@@ -11,4 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Netlify Build Hook
-        run: curl -X POST -d {} ${{ secrets.NETLIFY_BUILD_HOOK_URL }}
+        # WICHTIG: Die URL muss in Anführungszeichen stehen oder sauber übergeben werden,
+        # falls sie Sonderzeichen enthält. Das Secret muss im Repo hinterlegt sein!
+        run: curl -X POST -d {} "${{ secrets.NETLIFY_BUILD_HOOK_URL }}"
